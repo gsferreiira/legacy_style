@@ -156,8 +156,8 @@
             font-weight: 600;
             transition: all 0.3s;
             font-size: 16px;
-            border: none; /* Adicionado para botões */
-            cursor: pointer; /* Adicionado para botões */
+            border: none;
+            cursor: pointer;
         }
         
         .btn:hover {
@@ -607,6 +607,7 @@
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             border-color: #d4af37;
+            background-color: rgba(212, 175, 55, 0.05); /* Mantido para visual de hover */
         }
 
         .barber-option.selected {
@@ -663,6 +664,10 @@
         }
 
         /* Título melhorado */
+        .booking-title {
+            text-align: center; /* Adicionado para centralizar o título do modal */
+        }
+
         .booking-title h3 {
             font-size: 24px;
             margin-bottom: 5px;
@@ -688,7 +693,7 @@
             margin-top: 10px;
         }
 
-        /* Estilos para os slots de horário */
+        /* Estilos para os slots de horário (mantidos, mas não usados na versão simplificada) */
         #timeSlots {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
@@ -706,7 +711,6 @@
             transition: all 0.3s;
             font-size: 14px;
             font-weight: 500;
-            border: none;
         }
         
         .time-slot:hover {
@@ -731,7 +735,7 @@
             opacity: 0.7;
         }
         
-        /* Melhorias no calendário */
+        /* Melhorias no calendário (mantidas, mas não usadas na versão simplificada) */
         #appointmentDate {
             width: 100%;
             padding: 10px;
@@ -804,7 +808,7 @@
             color: #d4af37;
         }
 
-        /* Estilo para o spinner de loading */
+        /* Estilo para o spinner de loading (mantido, mas não usado) */
         .loading-spinner {
             grid-column: 1/-1;
             text-align: center;
@@ -820,6 +824,11 @@
         /* Efeito de hover para a seta do barbeiro */
         .barber-option .fa-chevron-right {
             transition: transform 0.3s ease;
+            font-size: 20px; /* Ajuste para ter o mesmo tamanho da versão anterior */
+        }
+        
+        .barber-option:hover .fa-chevron-right {
+            transform: translateX(5px) scale(1.1); /* Efeito de translação para indicar clique */
         }
         
         /* Estilos do Carrossel */
@@ -965,6 +974,7 @@
                 height: 100px;
             }
             
+            /* Remove a seta no mobile para layouts em coluna */
             .barber-option .fa-chevron-right {
                 display: none;
             }
@@ -1231,7 +1241,7 @@
                             <a href="https://www.instagram.com/silva__barbeer/?hl=en"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-facebook"></i></a>
                         </div>
-                        <a href="#" class="btn" style="margin-top: 15px; display: inline-block;">Ver Perfil</a>
+                        <a href="#" class="btn" id="bookBarberCaua" style="margin-top: 15px; display: inline-block;">Agendar com Cauã</a>
                     </div>
                 </div>
                 <div class="barber-card">
@@ -1247,7 +1257,7 @@
                             <a href="https://www.instagram.com/ovitinhobarber/?hl=en"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-facebook"></i></a>
                         </div>
-                        <a href="#" class="btn" style="margin-top: 15px; display: inline-block;">Ver Perfil</a>
+                        <a href="#" class="btn" id="bookBarberVitinho" style="margin-top: 15px; display: inline-block;">Agendar com Vitinho</a>
                     </div>
                 </div>
             </div>
@@ -1290,7 +1300,7 @@
                     </div>
                     <h3>Corte Infantil</h3>
                     <p>Atendimento especializado para os pequenos, com ambiente descontraído e profissionalismo.</p>
-                    <div class="price">R$ 35,00</div>
+                    <div class="price">R$ 50,00</div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1298,7 +1308,7 @@
                     </div>
                     <h3>Luzes</h3>
                     <p>Técnicas avançadas de coloração para deixar fios brancos.</p>
-                    <div class="price">R$ 100,00</div>
+                    <div class="price">R$ 150,00</div>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
@@ -1413,154 +1423,43 @@
             <div id="step1">
                 <div class="booking-title">
                     <h3>Escolha seu Barbeiro</h3>
-                    <p>Selecione o profissional que melhor atende às suas necessidades</p>
+                    <p>Selecione o profissional para ser redirecionado(a) ao sistema de agendamento dele(a).</p>
                 </div>
                 
                 <div class="barber-selection" id="barberSelection">
                     </div>
             </div>
-
-            <div id="step2" style="display:none;">
-            <div class="booking-title">
-                <h3>Selecione seus serviços</h3>
-                <p>Escolha um ou mais serviços para agendar</p>
-            </div>
-            
-            <div class="service-selection" id="serviceSelection">
-                </div>
-            
-            <div class="service-total">
-                Total: <span id="totalPrice">R$ 0,00</span> • <span id="totalDuration">0 min</span>
-            </div>
-            
-            <div class="navigation-buttons">
-                <button class="btn btn-secondary" id="backToStep1">Voltar</button>
-                <button class="btn" id="nextToStep3">Continuar</button>
-            </div>
-        </div>
-
-            <div id="step3" style="display:none;">
-                <div class="booking-title">
-                    <h3>Escolha a Data e Horário</h3>
-                    <p>Selecione uma data abaixo para ver os horários disponíveis</p>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <label for="appointmentDate" style="display: block; margin-bottom: 8px; font-weight: 500;">Data:</label>
-                    <input type="date" id="appointmentDate" style="width: 100%;">
-                </div>
-                
-                <div id="timeSlotsContainer" style="margin-top: 20px;">
-                    <h4 style="margin-bottom: 15px; color: #555;">Horários Disponíveis</h4>
-                    <div id="timeSlots"></div>
-                </div>
-                
-                <button class="btn" id="backToStep2" style="margin-top: 20px; background-color: #f5f5f5; color: #333;">Voltar</button>
-            </div>
-
-            <div id="step4" style="display:none;">
-                <div class="booking-title">
-                    <h3>Confirme seu Agendamento</h3>
-                    <p>Revise os detalhes abaixo e preencha seus dados</p>
-                </div>
-                
-                <div class="confirmation-container">
-                    <div class="confirmation-title">Detalhes do Agendamento</div>
-                    <div class="confirmation-details" id="confirmationDetails">
-                        </div>
-                </div>
-                
-                <form id="clientForm" class="client-form">
-                <input type="text" name="nome" placeholder="Seu Nome Completo" required>
-                <input type="tel" name="telefone" placeholder="Seu WhatsApp (ex: 41999999999)" required>
-                <input type="email" name="email" placeholder="Seu E-mail" required>
-                
-                <div id="pixInfo" style="display: none; margin: 20px 0; padding: 15px; background: #f5f5f5; border-radius: 8px;">
-                    <h4 style="margin-bottom: 10px; color: #d4af37;">Pagamento via PIX</h4>
-                    <p>Chave PIX: <strong>legacystyle@gmail.com</strong></p>
-                    <p>Valor: <strong id="pixAmount">R$ 0,00</strong></p>
-                    <p>Após a "confirmação", envie o comprovante para nosso WhatsApp.</p>
-                    <img src="assets/qrcode_pix.png" alt="QR Code PIX" style="max-width: 200px; margin: 10px auto; display: block;">
-                </div>
-                
-                <div class="confirmation-actions">
-                    <button type="button" class="btn btn-cancel" id="backToStep3">Voltar</button>
-                    <button type="submit" class="btn">Confirmar Agendamento</button>
-                </div>
-            </form>
-                <div class="payment-options" style="margin: 20px 0;">
-                    <h4 style="margin-bottom: 10px; color: #555;">Forma de Pagamento</h4>
-                    <div style="display: flex; flex-direction: column; gap: 10px;">
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="payment_method" value="presencial" checked style="accent-color: #d4af37;">
-                            Pagar na barbearia
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 8px; cursor: pointer;">
-                            <input type="radio" name="payment_method" value="pix" style="accent-color: #d4af37;">
-                            Pagar com PIX (5% de desconto)
-                        </label>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
     <script>
-        // Dados estáticos para substituir as chamadas ao banco de dados
+        // Dados estáticos para a lógica de redirecionamento
         const BARBEIROS_STATIC = [
             {
                 id: 1,
                 nome: "Cauã",
                 foto: "fotocaua.png",
                 especialidade: "Barbeiro Profissional",
-                rating: 4.5,
+                rating: 4.8,
                 avaliacoes: 85,
                 satisfacao: 92,
-                horarios: ["09:00", "09:30", "10:00", "11:00", "11:30", "13:00", "14:00", "14:30", "15:30", "16:00", "17:00"] // Exemplo de slots estáticos
+                // ** SUBSTITUA ESTE LINK PELO URL DE AGENDAMENTO REAL DO CAUÃ **
+                bookingUrl: "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0sbSQK6MpzVDWeMYRkEoeXGn6oOLipEdfWPotfIXY7GXlWUSPnD4CKpxy9AUF-Nbllg3MLvcWn" 
             },
             {
                 id: 2,
                 nome: "Vitinho",
                 foto: "fotovitor.png",
                 especialidade: "Mestre em cortes degradê",
-                rating: 5.0,
+                rating: 4.6,
                 avaliacoes: 105,
                 satisfacao: 95,
-                horarios: ["08:00", "08:30", "09:30", "10:30", "11:00", "13:30", "15:00", "16:30", "17:00", "17:30"] // Exemplo de slots estáticos
+                // ** SUBSTITUA ESTE LINK PELO URL DE AGENDAMENTO REAL DO VITINHO **
+                bookingUrl: "https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0jo7nuOHQktEtWNjoK7ciPVCyCIfYdCvm1Kixgeh-LSyVZXWXDbfKpEfT6SvJm-7-ruZEcFQJS" 
             }
         ];
 
-        const SERVICOS_STATIC = [
-            { id: 1, nome: "Corte de Cabelo", duracao: 40, preco: 40.00 },
-            { id: 2, nome: "Barba Completa", duracao: 30, preco: 30.00 },
-            { id: 3, nome: "Pacote Completo", duracao: 70, preco: 80.00 },
-            { id: 4, nome: "Corte Infantil", duracao: 35, preco: 35.00 },
-            { id: 5, nome: "Luzes", duracao: 100, preco: 100.00 },
-            { id: 6, nome: "Tratamento Capilar", duracao: 60, preco: 60.00 }
-        ];
-
-        // Função para simular a busca de horários (substitui get_horarios.php)
-        function getAvailableTimeSlots(barberId, date, requiredDuration) {
-            // No mundo real, a lógica aqui calcularia slots baseados na agenda REAL do barbeiro
-            // Para a versão estática, vamos apenas retornar os horários fixos do barbeiro
-            const barber = BARBEIROS_STATIC.find(b => b.id === parseInt(barberId));
-            
-            if (!barber) return [];
-
-            // Simplesmente retorna os horários fixos.
-            // A lógica de "encaixar" a duração total de serviços (requiredDuration) não pode ser
-            // implementada de forma realista em HTML/CSS/JS puro sem backend.
-            return barber.horarios;
-        }
-
-
         document.addEventListener('DOMContentLoaded', function() {
-            // Variáveis globais
-            let selectedBarber;
-            let selectedServices = [];
-            let selectedTimeSlot = null;
-            let totalPrice = 0;
-            let totalDuration = 0;
 
             // --- INSERÇÃO DE DADOS ESTÁTICOS NO MODAL ---
 
@@ -1570,7 +1469,10 @@
                 const ratingStars = '★'.repeat(Math.floor(barbeiro.rating)) + (barbeiro.rating % 1 !== 0 ? '½' : '');
                 
                 const optionHtml = `
-                    <div class="barber-option" data-barber="${barbeiro.id}" data-barber-name="${barbeiro.nome}">
+                    <div class="barber-option" 
+                         data-barber="${barbeiro.id}" 
+                         data-barber-name="${barbeiro.nome}"
+                         data-booking-url="${barbeiro.bookingUrl}">
                         <img src="assets/${barbeiro.foto}" alt="${barbeiro.nome}">
                         <div class="barber-info">
                             <h4>${barbeiro.nome}</h4>
@@ -1587,324 +1489,76 @@
                 barberSelectionDiv.insertAdjacentHTML('beforeend', optionHtml);
             });
             
-            // 2. Inserir Serviços
-            const serviceSelectionDiv = document.getElementById('serviceSelection');
-            SERVICOS_STATIC.forEach(servico => {
-                const optionHtml = `
-                    <label class="service-option">
-                        <input type="checkbox" data-service="${servico.id}" 
-                            data-duration="${servico.duracao}"
-                            data-price="${servico.preco}">
-                        <div class="service-info">
-                            <h4>${servico.nome}</h4>
-                            <div class="service-meta">
-                                <span class="service-duration">${servico.duracao} min</span>
-                                <span class="service-price">R$ ${servico.preco.toFixed(2).replace('.', ',')}</span>
-                            </div>
-                        </div>
-                    </label>
-                `;
-                serviceSelectionDiv.insertAdjacentHTML('beforeend', optionHtml);
-            });
+            // --- LÓGICA DE REDIRECIONAMENTO ---
 
+            function redirectToBooking(url) {
+                if (url && url.startsWith('http')) {
+                    // Redireciona para o URL de agendamento do barbeiro
+                    window.open(url, '_blank'); 
+                } else {
+                    showAlert('URL de agendamento não configurada. Por favor, edite o código.', 'error');
+                }
+                // Fecha o modal após o clique
+                closeModal();
+            }
 
-            // --- LÓGICA DO FLUXO DO MODAL ---
-
-            // Passo 1: Selecionar Barbeiro
+            // Atribuir o evento de clique para cada opção de barbeiro dentro do modal
             document.querySelectorAll('.barber-option').forEach(option => {
                 option.addEventListener('click', function() {
-                    document.querySelectorAll('.barber-option').forEach(el => {
-                        el.classList.remove('selected');
-                        el.querySelector('.fa-chevron-right').style.transform = 'translateX(0)';
-                    });
-                    
-                    this.classList.add('selected');
-                    this.querySelector('.fa-chevron-right').style.transform = 'translateX(5px)';
-                    
-                    selectedBarber = this.getAttribute('data-barber');
-                    document.getElementById('step1').style.display = 'none';
-                    document.getElementById('step2').style.display = 'block';
-                    
-                    // Resetar seleções ao voltar para escolher barbeiro
-                    selectedServices = [];
-                    totalPrice = 0;
-                    totalDuration = 0;
-                    updateTotals();
-                    document.querySelectorAll('.service-option input[type="checkbox"]').forEach(checkbox => {
-                        checkbox.checked = false;
-                        checkbox.closest('.service-option').classList.remove('selected');
-                    });
+                    const bookingUrl = this.getAttribute('data-booking-url');
+                    redirectToBooking(bookingUrl);
                 });
             });
 
-            // Passo 2: Selecionar Serviços
-            document.querySelectorAll('.service-selection input[type="checkbox"]').forEach(checkbox => {
-                checkbox.addEventListener('change', function() {
-                    const serviceId = parseInt(this.getAttribute('data-service'));
-                    const duration = parseInt(this.getAttribute('data-duration'));
-                    const price = parseFloat(this.getAttribute('data-price'));
-                    
-                    if (this.checked) {
-                        selectedServices.push(serviceId);
-                        totalDuration += duration;
-                        totalPrice += price;
-                        this.closest('.service-option').classList.add('selected');
-                    } else {
-                        selectedServices = selectedServices.filter(id => id !== serviceId);
-                        totalDuration -= duration;
-                        totalPrice -= price;
-                        this.closest('.service-option').classList.remove('selected');
-                    }
-                    
-                    updateTotals();
-                });
-            });
-
-            // Função para atualizar totais
-            function updateTotals() {
-                document.getElementById('totalPrice').textContent = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
-                document.getElementById('totalDuration').textContent = `${totalDuration} min`;
-                
-                // Atualiza o valor para o PIX no Step 4
-                const discountedPrice = totalPrice * 0.95;
-                document.getElementById('pixAmount').textContent = `R$ ${discountedPrice.toFixed(2).replace('.', ',')}`;
-            }
-
-            // Navegação entre passos
-            document.getElementById('backToStep1').addEventListener('click', function() {
-                document.getElementById('step2').style.display = 'none';
-                document.getElementById('step1').style.display = 'block';
-            });
-
-            document.getElementById('nextToStep3').addEventListener('click', function() {
-                if (selectedServices.length === 0) {
-                    showAlert('Por favor, selecione pelo menos um serviço', 'error');
-                    return;
-                }
-                
-                document.getElementById('step2').style.display = 'none';
-                document.getElementById('step3').style.display = 'block';
-                loadAvailableDates();
-            });
-
-            document.getElementById('backToStep2').addEventListener('click', function() {
-                document.getElementById('step3').style.display = 'none';
-                document.getElementById('step2').style.display = 'block';
-            });
-
-            // Passo 3: Carregar Datas/Horários Disponíveis
-            function loadAvailableDates() {
-                const dateInput = document.getElementById('appointmentDate');
-                const timeSlots = document.getElementById('timeSlots');
-                
-                // 1. Definir a data mínima como hoje
-                const today = new Date();
-                const dd = String(today.getDate()).padStart(2, '0');
-                const mm = String(today.getMonth() + 1).padStart(2, '0');
-                const yyyy = today.getFullYear();
-                dateInput.min = `${yyyy}-${mm}-${dd}`;
-
-                // 2. Lidar com a seleção de data
-                dateInput.onchange = function() {
-                    if (!this.value) return;
-                    
-                    timeSlots.innerHTML = '<div class="loading-spinner"><i class="fas fa-spinner fa-spin"></i> Carregando horários...</div>';
-                    
-                    // Simulação da chamada ao backend
-                    setTimeout(() => {
-                        const horarios = getAvailableTimeSlots(selectedBarber, this.value, totalDuration);
-                        
-                        timeSlots.innerHTML = '';
-                        selectedTimeSlot = null; // Resetar slot de hora
-                        
-                        if (horarios.length === 0) {
-                            timeSlots.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: #666;">Nenhum horário disponível para esta data</p>';
-                            return;
-                        }
-                        
-                        // Agrupar e exibir horários
-                        const manha = horarios.filter(h => parseInt(h.split(':')[0]) < 12);
-                        const tarde = horarios.filter(h => parseInt(h.split(':')[0]) >= 12);
-                        
-                        if (manha.length > 0) {
-                            timeSlots.insertAdjacentHTML('beforeend', `<h5 style="grid-column: 1/-1; margin-top: 10px; color: #555;">Manhã</h5>`);
-                            manha.forEach(horario => timeSlots.appendChild(createTimeSlot(horario)));
-                        }
-                        
-                        if (tarde.length > 0) {
-                            timeSlots.insertAdjacentHTML('beforeend', `<h5 style="grid-column: 1/-1; margin-top: 10px; color: #555;">Tarde</h5>`);
-                            tarde.forEach(horario => timeSlots.appendChild(createTimeSlot(horario)));
-                        }
-                    }, 500); // Simula um pequeno delay de rede
-                };
-            }
-
-            // Função auxiliar para criar um slot de horário
-            function createTimeSlot(horario) {
-                const button = document.createElement('button');
-                button.textContent = horario;
-                button.className = 'time-slot';
-                button.type = 'button';
-                button.addEventListener('click', function() {
-                    document.querySelectorAll('.time-slot.selected').forEach(el => el.classList.remove('selected'));
-                    this.classList.add('selected');
-                    selectTime(horario);
-                });
-                return button;
-            }
-
-            // Função para formatar data
-            function formatDate(dateString) {
-                const date = new Date(dateString);
-                const day = String(date.getDate()).padStart(2, '0');
-                const month = String(date.getMonth() + 1).padStart(2, '0');
-                const year = date.getFullYear();
-                return `${day}/${month}/${year}`;
-            }
-
-            // Passo 4: Confirmar Agendamento
-            function selectTime(horario) {
-                selectedTimeSlot = horario;
-                
-                // Preencher informações para o resumo
-                const dataValue = document.getElementById('appointmentDate').value;
-                const selectedBarberName = document.querySelector(`.barber-option[data-barber="${selectedBarber}"]`).getAttribute('data-barber-name');
-                const selectedServiceNames = selectedServices.map(id => {
-                    const servico = SERVICOS_STATIC.find(s => s.id === id);
-                    return servico ? servico.nome : '';
-                }).join('<br>');
-                
-                const confirmationDetails = document.getElementById('confirmationDetails');
-                confirmationDetails.innerHTML = `
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Barbeiro:</span>
-                        <span class="confirmation-value">${selectedBarberName}</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Serviços:</span>
-                        <span class="confirmation-value">
-                            ${selectedServiceNames}
-                        </span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Data:</span>
-                        <span class="confirmation-value">${formatDate(dataValue)}</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Horário:</span>
-                        <span class="confirmation-value">${horario}</span>
-                    </div>
-                    <div class="confirmation-item">
-                        <span class="confirmation-label">Duração:</span>
-                        <span class="confirmation-value">${totalDuration} minutos</span>
-                    </div>
-                    <div class="confirmation-total">
-                        <span>Valor Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}</span>
-                    </div>
-                `;
-                
-                // Garantir que a opção de pagamento 'presencial' esteja selecionada e a info pix oculta
-                document.querySelector('input[name="payment_method"][value="presencial"]').checked = true;
-                document.getElementById('pixInfo').style.display = 'none';
-
-                document.getElementById('step3').style.display = 'none';
-                document.getElementById('step4').style.display = 'block';
-            }
-
-            // Lógica de Desconto PIX
-            document.querySelectorAll('input[name="payment_method"]').forEach(radio => {
-                radio.addEventListener('change', function() {
-                    const totalSpan = document.querySelector('.confirmation-total span');
-                    const pixInfo = document.getElementById('pixInfo');
-
-                    if (this.value === 'pix') {
-                        const discountedPrice = totalPrice * 0.95; // 5% de desconto
-                        totalSpan.innerHTML = 
-                            `Valor Total: <span style="text-decoration: line-through;">R$ ${totalPrice.toFixed(2).replace('.', ',')}</span> 
-                            R$ ${discountedPrice.toFixed(2).replace('.', ',')} (com 5% de desconto PIX)`;
-                        pixInfo.style.display = 'block';
-                        document.getElementById('pixAmount').textContent = `R$ ${discountedPrice.toFixed(2).replace('.', ',')}`;
-                    } else {
-                        totalSpan.innerHTML = `Valor Total: R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
-                        pixInfo.style.display = 'none';
-                    }
-                });
-            });
-
-            // Botão de voltar do Passo 4
-            document.getElementById('backToStep3').addEventListener('click', function() {
-                document.getElementById('step4').style.display = 'none';
-                document.getElementById('step3').style.display = 'block';
-            });
-
-            // "Submeter" formulário de agendamento (apenas simulação)
-            document.getElementById('clientForm').addEventListener('submit', function(e) {
+            // Adicionar evento de clique aos botões de agendamento na seção Barbeiros (fora do modal)
+            document.getElementById('bookBarberCaua').addEventListener('click', function(e) {
                 e.preventDefault();
-                // Simulação de envio
-                showAlert('Agendamento SIMULADO realizado com sucesso! (Não enviado ao servidor)', 'success');
-
-                // Fechar modal após a "confirmação"
-                const modal = document.getElementById('bookingModal');
-                const content = document.querySelector('.booking-content');
-                
-                content.classList.remove('show');
-                setTimeout(() => {
-                    modal.style.display = 'none';
-                }, 300);
+                const caua = BARBEIROS_STATIC.find(b => b.nome === 'Cauã');
+                if (caua) {
+                    redirectToBooking(caua.bookingUrl);
+                }
             });
 
+            document.getElementById('bookBarberVitinho').addEventListener('click', function(e) {
+                e.preventDefault();
+                const vitinho = BARBEIROS_STATIC.find(b => b.nome === 'Vitinho');
+                if (vitinho) {
+                    redirectToBooking(vitinho.bookingUrl);
+                }
+            });
 
             // --- LÓGICA DO MODAL (Abertura/Fechamento) ---
+            
+            const modal = document.getElementById('bookingModal');
+            const content = document.querySelector('.booking-content');
 
-            // Abrir modal quando clicar em "Agende seu horário"
-            document.getElementById('bookNowHero').addEventListener('click', function(e) {
-                e.preventDefault();
-                const modal = document.getElementById('bookingModal');
-                const content = document.querySelector('.booking-content');
-                
+            function openModal() {
                 modal.style.display = 'block';
                 setTimeout(() => {
                     content.classList.add('show');
                 }, 10);
-                
-                // Resetar passos e seleções
-                document.getElementById('step1').style.display = 'block';
-                document.getElementById('step2').style.display = 'none';
-                document.getElementById('step3').style.display = 'none';
-                document.getElementById('step4').style.display = 'none';
-                
-                selectedBarber = null;
-                selectedServices = [];
-                selectedTimeSlot = null;
-                totalPrice = 0;
-                totalDuration = 0;
-                updateTotals();
-                
-                document.querySelectorAll('.barber-option, .service-option, .time-slot').forEach(el => el.classList.remove('selected'));
-                document.querySelectorAll('.service-selection input[type="checkbox"]').forEach(checkbox => checkbox.checked = false);
-            });
+            }
 
-            // Fechar modal
-            document.querySelector('.close-booking').addEventListener('click', function() {
-                const modal = document.getElementById('bookingModal');
-                const content = document.querySelector('.booking-content');
-                
+            function closeModal() {
                 content.classList.remove('show');
                 setTimeout(() => {
                     modal.style.display = 'none';
                 }, 300);
+            }
+
+            // Abrir modal quando clicar em "Agende seu horário" do Hero
+            document.getElementById('bookNowHero').addEventListener('click', function(e) {
+                e.preventDefault();
+                openModal();
             });
+
+            // Fechar modal
+            document.querySelector('.close-booking').addEventListener('click', closeModal);
 
             // Fechar modal ao clicar fora do conteúdo
             document.getElementById('bookingModal').addEventListener('click', function(e) {
                 if (e.target === this) {
-                    const modal = document.getElementById('bookingModal');
-                    const content = document.querySelector('.booking-content');
-                    
-                    content.classList.remove('show');
-                    setTimeout(() => {
-                        modal.style.display = 'none';
-                    }, 300);
+                    closeModal();
                 }
             });
 
@@ -1912,10 +1566,9 @@
             document.querySelector('.menu-toggle').addEventListener('click', function() {
                 document.querySelector('nav').classList.toggle('active');
             });
-        });
 
-        // --- LÓGICA DO CARROSSEL ---
-        document.addEventListener('DOMContentLoaded', function() {
+
+            // --- LÓGICA DO CARROSSEL (Restaurada) ---
             const slides = document.querySelectorAll('.carousel-slide');
             const dotsContainer = document.querySelector('.carousel-dots');
             const prevBtn = document.querySelector('.carousel-prev');
@@ -1934,7 +1587,7 @@
             // Atualizar carrossel
             function updateCarousel() {
                 const slidesContainer = document.querySelector('.carousel-slides');
-                if (slides.length === 0) return; // Garante que há slides
+                if (slides.length === 0) return;
                 const slideWidth = slides[0].clientWidth;
                 slidesContainer.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
                 
@@ -1944,9 +1597,8 @@
                 });
             }
             
-            // Reajustar em resize para evitar slides quebrados
             window.addEventListener('resize', updateCarousel);
-            updateCarousel(); // Chamada inicial
+            updateCarousel();
             
             // Navegação
             function goToSlide(index) {
@@ -1964,20 +1616,17 @@
                 updateCarousel();
             }
             
-            // Event listeners
             nextBtn.addEventListener('click', nextSlide);
             prevBtn.addEventListener('click', prevSlide);
             
-            // Auto-avanço (opcional)
             let interval = setInterval(nextSlide, 5000);
             
-            // Pausar ao passar o mouse
             const carousel = document.querySelector('.carousel-container');
             carousel.addEventListener('mouseenter', () => clearInterval(interval));
             carousel.addEventListener('mouseleave', () => interval = setInterval(nextSlide, 5000));
         });
 
-        // Função para mostrar alerta
+        // Função para mostrar alerta (Restaurada)
         function showAlert(message, type) {
             const alert = document.createElement('div');
             alert.className = `alert alert-${type}`;
@@ -1987,7 +1636,6 @@
             `;
             document.body.appendChild(alert);
             
-            // Remover após alguns segundos
             setTimeout(() => {
                 alert.remove();
             }, 3500);
