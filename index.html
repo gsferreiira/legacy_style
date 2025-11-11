@@ -299,6 +299,7 @@
             display: flex;
             justify-content: center;
             gap: 15px;
+            margin-bottom: 15px; /* Adicionado margem para separar do novo botão */
         }
         
         .social-links a {
@@ -1230,7 +1231,7 @@
             <div class="barbers-grid">
                 <div class="barber-card">
                     <div class="barber-img">
-                        <a href="caua.html"><img src="assets/fotocaua.png" alt="Barbeiro Cauã"></a>
+                        <img src="assets/fotocaua.png" alt="Barbeiro Cauã">
                     </div>
                     <div class="barber-info">
                         <h3>Cauã</h3>
@@ -1241,12 +1242,12 @@
                             <a href="https://www.instagram.com/silva__barbeer/?hl=en"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-facebook"></i></a>
                         </div>
-                        <a href="caua.html" class="btn" style="margin-top: 15px; display: inline-block;">Abrir Perfil</a>
+                        <a href="caua.html" class="btn" style="margin-top: 5px;">Ver Perfil</a>
                     </div>
                 </div>
                 <div class="barber-card">
                     <div class="barber-img">
-                        <a href="vitinho.html"><img src="assets/fotovitor.png" alt="Barbeiro Vitinho"></a>
+                        <img src="assets/fotovitor.png" alt="Barbeiro Vitinho">
                     </div>
                     <div class="barber-info">
                         <h3>Vitinho</h3>
@@ -1257,7 +1258,7 @@
                             <a href="https://www.instagram.com/ovitinhobarber/?hl=en"><i class="fab fa-instagram"></i></a>
                             <a href="#"><i class="fab fa-facebook"></i></a>
                         </div>
-                        <a href="vitinho.html" class="btn" style="margin-top: 15px; display: inline-block;">Abrir Perfil</a>
+                        <a href="vitinho.html" class="btn" style="margin-top: 5px;">Ver Perfil</a>
                     </div>
                 </div>
             </div>
@@ -1508,23 +1509,6 @@
                     const bookingUrl = this.getAttribute('data-booking-url');
                     redirectToBooking(bookingUrl);
                 });
-            });
-
-            // Adicionar evento de clique aos botões de agendamento na seção Barbeiros (fora do modal)
-            document.getElementById('bookBarberCaua').addEventListener('click', function(e) {
-                e.preventDefault();
-                const caua = BARBEIROS_STATIC.find(b => b.nome === 'Cauã');
-                if (caua) {
-                    redirectToBooking(caua.bookingUrl);
-                }
-            });
-
-            document.getElementById('bookBarberVitinho').addEventListener('click', function(e) {
-                e.preventDefault();
-                const vitinho = BARBEIROS_STATIC.find(b => b.nome === 'Vitinho');
-                if (vitinho) {
-                    redirectToBooking(vitinho.bookingUrl);
-                }
             });
 
             // --- LÓGICA DO MODAL (Abertura/Fechamento) ---
